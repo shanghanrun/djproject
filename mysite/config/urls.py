@@ -1,15 +1,28 @@
+"""config URL Configuration
 
-
+The `urlpatterns` list routes URLs to views. For more information please see:
+    https://docs.djangoproject.com/en/3.0/topics/http/urls/
+Examples:
+Function views
+    1. Add an import:  from my_app import views
+    2. Add a URL to urlpatterns:  path('', views.home, name='home')
+Class-based views
+    1. Add an import:  from other_app.views import Home
+    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
+Including another URLconf
+    1. Import the include() function: from django.urls import include, path
+    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
+"""
 from django.contrib import admin
-from django.urls import path
-from pybo import views
-from django.urls import path, include    # path와 inclue  두 개를 임포트
+from django.urls import include, path
+
+from pybo.views import base_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pybo/', include('pybo.urls')), # pybo/로 시작되는 페이지 요청은 pybo/url.py 파일내용을 참조 처리
-    # path('pybo/', views.index),
+    path('pybo/', include('pybo.urls')),
     path('common/', include('common.urls')),
-    path('', views.index, name='index'),  #  루트('/')페이지에 해당하는 것
-
+    path('', base_views.index, name='index'),  # '/' 에 해당되는 path
 ]
+
+handler404 = 'common.views.page_not_found'
